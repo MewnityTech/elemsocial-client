@@ -344,7 +344,6 @@ function checkUpdates() {
             show_notification('Статус подключения', 'Подключение...')
             await generateKeys();
             var publicKeyPem = arrayBufferToPem(rsaPublic, 'PUBLIC KEY');
-            // Отправляем публичный ключ для обмена
             socket.send(JSON.stringify({
                 type: 'key_exchange',
                 key: publicKeyPem
@@ -357,7 +356,6 @@ function checkUpdates() {
             var rawData = event.data;
 
             if (rsaPublicServer) {
-                // Если уже установлен обмен ключами с сервером
                 if (aesServerKey) {
                     // Если ключ для AES получен – шифрование происходит через AES
                     var decryptedStr = await aesDecrypt(await blobToUint8Array(rawData), aesKey);
